@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        ROBOT_RESULTS_DIR = "${WORKSPACE}"
+        ROBOT_RESULTS_DIR = "${WORKSPACE}/robot_results"
         PYTHON_ENV = "c:/Users/geams/OneDrive/Bureau/ProjetAlten/.venv/Scripts"
     }
 
@@ -20,18 +20,21 @@ pipeline {
                 bat "${PYTHON_ENV}/pip install robotframework-requests robotframework-jsonlibrary"
             }
         }
+
         stage('Debug: Check Installed Packages') {
             steps {
                 bat "${PYTHON_ENV}/pip list"
             }
         }
 
-        stage('Run Robot Tests') {
+        stage('Run Robot Tests - ServiceNow') {
             steps {
-                bat "${PYTHON_ENV}/robot -d ${ROBOT_RESULTS_DIR} ${WORKSPACE}/tests/test_incident.robot"
+                bat "mkdir ${ROBOT_RESULTS_DIR}" // s'assurer que le dossier existe
+                //bat "${PYTHON_ENV}/robot -d ${ROBOT_RESULTS_DIR} ${WORKSPACE}/tests/test_incident.robot"
+                bat "${PYTHON_ENV}/robot -d ${ROBOT_RESULTS_DIR} ${WORKSPACE}/tests/test_servicenow.robot"
             }
         }
-        
+
         stage('Convert Robot Results to JUnit Format') {
             steps {
                 bat "${PYTHON_ENV}/python -m robot.rebot --xunit ${ROBOT_RESULTS_DIR}/xunit_result.xml ${ROBOT_RESULTS_DIR}/output.xml"
@@ -41,13 +44,13 @@ pipeline {
         stage('Debug: Check Files') {
             steps {
                 bat "dir ${ROBOT_RESULTS_DIR}"
-                bat 'type C:\\Users\\geams\\.jenkins\\workspace\\TestRobot_Pipeline\\xunit_result.xml'
+                bat "type ${ROBOT_RESULTS_DIR}\\xunit_result.xml"
             }
         }
 
         stage('Publish Test Results') {
             steps {
-                junit '**/xunit_result.xml'
+                junit 'robot_results/xunit_result.xml'
             }
         }
     }
