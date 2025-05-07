@@ -29,7 +29,7 @@ pipeline {
 
         stage('Run Robot Tests - ServiceNow') {
             steps {
-                bat "mkdir ${ROBOT_RESULTS_DIR}" // s'assurer que le dossier existe
+                bat "if not exist \"${ROBOT_RESULTS_DIR}\" mkdir \"${ROBOT_RESULTS_DIR}\""
                 //bat "${PYTHON_ENV}/robot -d ${ROBOT_RESULTS_DIR} ${WORKSPACE}/tests/test_incident.robot"
                 bat "${PYTHON_ENV}/robot -d ${ROBOT_RESULTS_DIR} ${WORKSPACE}/tests/test_servicenow.robot"
             }
