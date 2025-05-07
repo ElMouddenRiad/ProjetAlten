@@ -37,16 +37,17 @@ pipeline {
 
         stage('Convert Robot Results to JUnit Format') {
             steps {
-                bat "${PYTHON_ENV}/python -m robot.rebot --xunit ${ROBOT_RESULTS_DIR}/xunit_result.xml ${ROBOT_RESULTS_DIR}/output.xml"
+                bat "${PYTHON_ENV}/python -m robot.rebot -d \"${ROBOT_RESULTS_DIR}\" --xunit \"${ROBOT_RESULTS_DIR}\\xunit_result.xml\" \"${ROBOT_RESULTS_DIR}\\output.xml\""
             }
         }
 
         stage('Debug: Check Files') {
             steps {
-                bat "dir ${ROBOT_RESULTS_DIR}"
-                bat "type ${ROBOT_RESULTS_DIR}\\xunit_result.xml"
+                bat "dir \"${ROBOT_RESULTS_DIR}\""
+                bat "type \"${ROBOT_RESULTS_DIR}\\xunit_result.xml\""
             }
         }
+
 
         stage('Publish Test Results') {
             steps {
