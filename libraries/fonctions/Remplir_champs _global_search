@@ -1,0 +1,69 @@
+from robot.libraries.BuiltIn import BuiltIn
+from robot.api.deco import keyword
+import time
+
+
+def Remplir_champ_global_search(texte):
+    seleniumlib = BuiltIn().get_library_instance("SeleniumLibrary")
+    driver = seleniumlib.driver
+
+    max_attempts = 30
+    delay = 0.3
+
+    for attempt in range(max_attempts):
+        try:
+            print(f"[{attempt+1}/{max_attempts}] Tentative d'accès au champ de recherche...")
+
+            # Traversée du Shadow DOM imbriqué pour atteindre l'input de recherche globale
+            input_element = driver.execute_script("""
+                try {
+                    // Niveau 1 : composant principal
+                    const root1 = document.querySelector("macroponent-f51912f4c700201072b211d4d8c26010");
+                    if (!root1) return null;
+                    const shadow1 = root1.shadowRoot;
+
+                    // Niveau 2 : layout global
+                    const layout = shadow1.querySelector("sn-canvas-appshell-root > sn-canvas-appshell-layout > sn-polaris-layout");
+                    if (!layout) return null;
+                    const shadow2 = layout.shadowRoot;
+
+                    // Niveau 3 : en-tête de page
+                    const header =div.sn-polaris-layout.polaris-enabled > div.layout-main > div.header-bar > sn-polaris-header");
+                    if (!header) return null;
+                    const shadow3 = header.shadowRoot;
+
+                    //Niveau 5 : 
+
+
+
+
+                    // Niveau 7 : composant de saisie typeahead
+                    const typeahead = shadow4.querySelector("div > div > div > div > span");
+                    if (!typeahead) return null;
+                    const shadow5 = typeahead.shadowRoot;
+
+                    // Champ de recherche
+                    const input = shadow5.querySelector("div > div > div > div > input");
+                    if (!input) return null;
+
+                    input.focus();
+                    return input;
+                } catch(e) {
+                    return null;
+                }
+            """)
+
+            if input_element:
+                # On récupère la référence JS pour que Selenium puisse y envoyer du texte
+                element_ref = driver.execute_script("return arguments[0];", input_element)
+                element_ref.clear()
+                element_ref.send_keys(texte)
+                print("Texte saisi avec succès.")
+                return
+
+        except Exception as e:
+            print(f"Erreur Python : {e}")
+
+        time.sleep(delay)
+
+    raise Exception("Impossible de trouver ou remplir le champ de recherche global après plusieurs tentatives.")
