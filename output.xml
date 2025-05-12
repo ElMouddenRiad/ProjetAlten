@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<robot generator="Robot 7.2.2 (Python 3.12.0 on win32)" generated="2025-04-21T23:56:12.693111" rpa="false" schemaversion="5">
-<suite id="s1" name="Test Servicenow" source="C:\Users\geams\OneDrive\Bureau\ProjetAlten\tests\test_servicenow.robot">
+<robot generator="Robot 7.2.2 (Python 3.13.2 on win32)" generated="2025-05-07T15:48:50.606553" rpa="false" schemaversion="5">
+<suite id="s1" name="Test Servicenow" source="C:\Test_Snow\ProjetAlten\tests\test_servicenow.robot">
 <kw name="Ouvrir le navigateur ServiceNow" owner="servicenow_keywords" type="SETUP">
 <kw name="Open Browser" owner="SeleniumLibrary">
-<msg time="2025-04-21T23:56:13.033995" level="INFO">Opening browser 'chrome' to base url 'https://bouyguestelecomltt.service-now.com/'.</msg>
+<msg time="2025-05-07T15:48:51.434350" level="INFO">Opening browser 'chrome' to base url 'https://bouyguestelecomltt3.service-now.com/'.</msg>
+<msg time="2025-05-07T15:48:59.197551" level="WARN">The chromedriver version (135.0.7049.95) detected in PATH at chromedriver.EXE might not be compatible with the detected chrome version (136.0.7103.48); currently, chromedriver 136.0.7103.92 is recommended for chrome 136.*, so it is advised to delete the driver in PATH and retry</msg>
 <arg>${SERVICENOW_URL}</arg>
 <arg>${BROWSER}</arg>
 <doc>Opens a new browser instance to the optional ``url``.</doc>
-<status status="PASS" start="2025-04-21T23:56:13.033995" elapsed="3.347487"/>
+<status status="PASS" start="2025-05-07T15:48:51.433711" elapsed="13.302175"/>
 </kw>
 <kw name="Maximize Browser Window" owner="SeleniumLibrary">
 <doc>Maximizes current browser window.</doc>
-<status status="PASS" start="2025-04-21T23:56:16.381482" elapsed="0.035000"/>
+<status status="PASS" start="2025-05-07T15:49:04.737925" elapsed="0.102054"/>
 </kw>
-<status status="PASS" start="2025-04-21T23:56:13.033020" elapsed="3.383462"/>
+<status status="PASS" start="2025-05-07T15:48:51.432295" elapsed="13.408650"/>
 </kw>
 <test id="s1-t1" name="Création et vérifications d’un ticket sur ServiceNow" line="8">
 <kw name="Se connecter à ServiceNow" owner="servicenow_keywords">
@@ -21,157 +22,89 @@
 <arg>id=user_name</arg>
 <arg>timeout=15s</arg>
 <doc>Waits until the element ``locator`` is visible.</doc>
-<status status="PASS" start="2025-04-21T23:56:16.418481" elapsed="0.019000"/>
+<status status="PASS" start="2025-05-07T15:49:04.853883" elapsed="0.439324"/>
 </kw>
 <kw name="Input Text" owner="SeleniumLibrary">
-<msg time="2025-04-21T23:56:16.438483" level="INFO">Typing text 'altst004' into text field 'id=user_name'.</msg>
+<msg time="2025-05-07T15:49:05.294558" level="INFO">Typing text 'altst004' into text field 'id=user_name'.</msg>
 <arg>id=user_name</arg>
 <arg>${SNOW_USERNAME}</arg>
 <doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
-<status status="PASS" start="2025-04-21T23:56:16.438483" elapsed="0.081999"/>
+<status status="PASS" start="2025-05-07T15:49:05.293789" elapsed="0.239273"/>
 </kw>
 <kw name="Input Text" owner="SeleniumLibrary">
-<msg time="2025-04-21T23:56:16.520482" level="INFO">Typing text 'Automatisation@2023' into text field 'id=user_password'.</msg>
+<msg time="2025-05-07T15:49:05.534293" level="INFO">Typing text 'Automatisation@2023' into text field 'id=user_password'.</msg>
 <arg>id=user_password</arg>
 <arg>${SNOW_PASSWORD}</arg>
 <doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
-<status status="PASS" start="2025-04-21T23:56:16.520482" elapsed="0.125002"/>
+<status status="PASS" start="2025-05-07T15:49:05.533597" elapsed="0.352579"/>
 </kw>
 <kw name="Click Button" owner="SeleniumLibrary">
-<msg time="2025-04-21T23:56:16.645484" level="INFO">Clicking button 'id=sysverb_login'.</msg>
+<msg time="2025-05-07T15:49:05.887246" level="INFO">Clicking button 'id=sysverb_login'.</msg>
 <arg>id=sysverb_login</arg>
 <doc>Clicks the button identified by ``locator``.</doc>
-<status status="PASS" start="2025-04-21T23:56:16.645484" elapsed="0.391999"/>
+<status status="PASS" start="2025-05-07T15:49:05.886692" elapsed="8.755381"/>
 </kw>
-<status status="PASS" start="2025-04-21T23:56:16.418481" elapsed="0.620003"/>
+<status status="PASS" start="2025-05-07T15:49:04.850143" elapsed="9.792336"/>
 </kw>
 <kw name="Sleep" owner="BuiltIn">
-<msg time="2025-04-21T23:56:37.040285" level="INFO">Slept 20 seconds.</msg>
+<msg time="2025-05-07T15:49:34.659058" level="INFO">Slept 20 seconds.</msg>
 <arg>time_=20</arg>
 <doc>Pauses the test executed for the given time.</doc>
-<status status="PASS" start="2025-04-21T23:56:17.038484" elapsed="20.001801"/>
+<status status="PASS" start="2025-05-07T15:49:14.657350" elapsed="20.002127"/>
 </kw>
 <kw name="Cliquer Sur Bouton All" owner="shadow">
-<msg time="2025-04-21T23:56:37.068276" level="INFO">[1/30] Tentative de clic sur le bouton 'All'...
+<msg time="2025-05-07T15:49:34.703970" level="INFO">[1/30] Tentative de clic sur le bouton 'All'...
 Clic sur le bouton 'All' réussi.</msg>
-<status status="PASS" start="2025-04-21T23:56:37.040285" elapsed="0.027991"/>
+<status status="PASS" start="2025-05-07T15:49:34.660873" elapsed="0.043357"/>
 </kw>
 <kw name="Sleep" owner="BuiltIn">
-<msg time="2025-04-21T23:56:57.070989" level="INFO">Slept 20 seconds.</msg>
-<arg>time_=20</arg>
+<msg time="2025-05-07T15:50:04.707732" level="INFO">Slept 30 seconds.</msg>
+<arg>time_=30</arg>
 <doc>Pauses the test executed for the given time.</doc>
-<status status="PASS" start="2025-04-21T23:56:37.069275" elapsed="20.001714"/>
+<status status="PASS" start="2025-05-07T15:49:34.705884" elapsed="30.002220"/>
 </kw>
-<kw name="Rechercher Et Selectionner Creer Iu" owner="shadow">
-<msg time="2025-04-21T23:56:57.470233" level="INFO">[1/30] Tentative d’accès à la barre de recherche contextuelle...
-Texte 'Créer IU' saisi dans la barre contextuelle.
-[1/30] Tentative de clic sur le favori 'Créer IU'...
-[2/30] Tentative de clic sur le favori 'Créer IU'...
-Clic sur 'Créer IU' dans les favoris réussi.</msg>
-<status status="PASS" start="2025-04-21T23:56:57.070989" elapsed="0.400246"/>
+<kw name="Rechercher Et Selectionner Creer TCO" owner="shadow">
+<msg time="2025-05-07T15:50:05.412644" level="INFO">[1/30] Tentative d’accès à la barre de recherche contextuelle...
+Texte 'Créer Tco' saisi dans la barre contextuelle.
+[1/30] Tentative de clic sur le favori 'Créer Tco'...
+[2/30] Tentative de clic sur le favori 'Créer Tco'...
+Clic sur 'Créer Tco' dans les favoris réussi.</msg>
+<status status="PASS" start="2025-05-07T15:50:04.709387" elapsed="0.703536"/>
 </kw>
 <kw name="Sleep" owner="BuiltIn">
-<msg time="2025-04-21T23:57:17.471680" level="INFO">Slept 20 seconds.</msg>
+<msg time="2025-05-07T15:50:25.415354" level="INFO">Slept 20 seconds.</msg>
 <arg>time_=20</arg>
 <doc>Pauses the test executed for the given time.</doc>
-<status status="PASS" start="2025-04-21T23:56:57.471235" elapsed="20.000445"/>
+<status status="PASS" start="2025-05-07T15:50:05.414275" elapsed="20.001496"/>
 </kw>
-<kw name="Remplir Champs Obligatoires Creer IU" owner="shadow">
-<msg time="2025-04-21T23:57:17.486717" level="FAIL">Erreur lors du remplissage de input#IO\:7ed859fc37b0de008c8c2b2943990ee3 : Message: no such element: Unable to locate element: {"method":"css selector","selector":"input#IO\:7ed859fc37b0de008c8c2b2943990ee3"}
-  (Session info: chrome=135.0.7049.96); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception
-Stacktrace:
-	GetHandleVerifier [0x00007FF7D9375355+78597]
-	GetHandleVerifier [0x00007FF7D93753B0+78688]
-	(No symbol) [0x00007FF7D91291AA]
-	(No symbol) [0x00007FF7D917F149]
-	(No symbol) [0x00007FF7D917F3FC]
-	(No symbol) [0x00007FF7D91D2467]
-	(No symbol) [0x00007FF7D91A712F]
-	(No symbol) [0x00007FF7D91CF2BB]
-	(No symbol) [0x00007FF7D91A6EC3]
-	(No symbol) [0x00007FF7D91703F8]
-	(No symbol) [0x00007FF7D9171163]
-	GetHandleVerifier [0x00007FF7D961EF0D+2870973]
-	GetHandleVerifier [0x00007FF7D96196B8+2848360]
-	GetHandleVerifier [0x00007FF7D9636993+2967875]
-	GetHandleVerifier [0x00007FF7D939019A+188746]
-	GetHandleVerifier [0x00007FF7D939847F+222255]
-	GetHandleVerifier [0x00007FF7D937D2D4+111236]
-	GetHandleVerifier [0x00007FF7D937D482+111666]
-	GetHandleVerifier [0x00007FF7D93635A9+5465]
-	BaseThreadInitThunk [0x00007FFC4C0B7374+20]
-	RtlUserThreadStart [0x00007FFC4DFBCC91+33]
-</msg>
-<status status="FAIL" start="2025-04-21T23:57:17.471680" elapsed="0.019041">Erreur lors du remplissage de input#IO\:7ed859fc37b0de008c8c2b2943990ee3 : Message: no such element: Unable to locate element: {"method":"css selector","selector":"input#IO\:7ed859fc37b0de008c8c2b2943990ee3"}
-  (Session info: chrome=135.0.7049.96); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception
-Stacktrace:
-	GetHandleVerifier [0x00007FF7D9375355+78597]
-	GetHandleVerifier [0x00007FF7D93753B0+78688]
-	(No symbol) [0x00007FF7D91291AA]
-	(No symbol) [0x00007FF7D917F149]
-	(No symbol) [0x00007FF7D917F3FC]
-	(No symbol) [0x00007FF7D91D2467]
-	(No symbol) [0x00007FF7D91A712F]
-	(No symbol) [0x00007FF7D91CF2BB]
-	(No symbol) [0x00007FF7D91A6EC3]
-	(No symbol) [0x00007FF7D91703F8]
-	(No symbol) [0x00007FF7D9171163]
-	GetHandleVerifier [0x00007FF7D961EF0D+2870973]
-	GetHandleVerifier [0x00007FF7D96196B8+2848360]
-	GetHandleVerifier [0x00007FF7D9636993+2967875]
-	GetHandleVerifier [0x00007FF7D939019A+188746]
-	GetHandleVerifier [0x00007FF7D939847F+222255]
-	GetHandleVerifier [0x00007FF7D937D2D4+111236]
-	GetHandleVerifier [0x00007FF7D937D482+111666]
-	GetHandleVerifier [0x00007FF7D93635A9+5465]
-	BaseThreadInitThunk [0x00007FFC4C0B7374+20]
-	RtlUserThreadStart [0x00007FFC4DFBCC91+33]
-</status>
+<kw name="Remplir Champs Obligatoires Tco" owner="shadow">
+<msg time="2025-05-07T15:50:29.242821" level="INFO">Attente du champ catégorie dans le DOM...
+Attente du champ sous-catégorie dans le DOM...
+Tous les champs obligatoires ont été remplis.</msg>
+<status status="PASS" start="2025-05-07T15:50:25.417404" elapsed="3.825781"/>
 </kw>
 <kw name="Sleep" owner="BuiltIn">
+<msg time="2025-05-07T15:50:49.245786" level="INFO">Slept 20 seconds.</msg>
 <arg>time_=20</arg>
 <doc>Pauses the test executed for the given time.</doc>
-<status status="NOT RUN" start="2025-04-21T23:57:17.491713" elapsed="0.000000"/>
+<status status="PASS" start="2025-05-07T15:50:29.244299" elapsed="20.001868"/>
 </kw>
 <doc>Simule la création d’un ticket LTT ServiceNow et vérifie l’ensemble des éléments requis.</doc>
-<status status="FAIL" start="2025-04-21T23:56:16.417481" elapsed="61.074232">Erreur lors du remplissage de input#IO\:7ed859fc37b0de008c8c2b2943990ee3 : Message: no such element: Unable to locate element: {"method":"css selector","selector":"input#IO\:7ed859fc37b0de008c8c2b2943990ee3"}
-  (Session info: chrome=135.0.7049.96); For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception
-Stacktrace:
-	GetHandleVerifier [0x00007FF7D9375355+78597]
-	GetHandleVerifier [0x00007FF7D93753B0+78688]
-	(No symbol) [0x00007FF7D91291AA]
-	(No symbol) [0x00007FF7D917F149]
-	(No symbol) [0x00007FF7D917F3FC]
-	(No symbol) [0x00007FF7D91D2467]
-	(No symbol) [0x00007FF7D91A712F]
-	(No symbol) [0x00007FF7D91CF2BB]
-	(No symbol) [0x00007FF7D91A6EC3]
-	(No symbol) [0x00007FF7D91703F8]
-	(No symbol) [0x00007FF7D9171163]
-	GetHandleVerifier [0x00007FF7D961EF0D+2870973]
-	GetHandleVerifier [0x00007FF7D96196B8+2848360]
-	GetHandleVerifier [0x00007FF7D9636993+2967875]
-	GetHandleVerifier [0x00007FF7D939019A+188746]
-	GetHandleVerifier [0x00007FF7D939847F+222255]
-	GetHandleVerifier [0x00007FF7D937D2D4+111236]
-	GetHandleVerifier [0x00007FF7D937D482+111666]
-	GetHandleVerifier [0x00007FF7D93635A9+5465]
-	BaseThreadInitThunk [0x00007FFC4C0B7374+20]
-	RtlUserThreadStart [0x00007FFC4DFBCC91+33]
-</status>
+<status status="PASS" start="2025-05-07T15:49:04.843402" elapsed="104.404146"/>
 </test>
-<status status="FAIL" start="2025-04-21T23:56:12.694112" elapsed="64.801567"/>
+<status status="PASS" start="2025-05-07T15:48:50.610151" elapsed="118.640902"/>
 </suite>
 <statistics>
 <total>
-<stat pass="0" fail="1" skip="0">All Tests</stat>
+<stat pass="1" fail="0" skip="0">All Tests</stat>
 </total>
 <tag>
 </tag>
 <suite>
-<stat name="Test Servicenow" id="s1" pass="0" fail="1" skip="0">Test Servicenow</stat>
+<stat name="Test Servicenow" id="s1" pass="1" fail="0" skip="0">Test Servicenow</stat>
 </suite>
 </statistics>
 <errors>
+<msg time="2025-05-07T15:48:59.197551" level="WARN">The chromedriver version (135.0.7049.95) detected in PATH at chromedriver.EXE might not be compatible with the detected chrome version (136.0.7103.48); currently, chromedriver 136.0.7103.92 is recommended for chrome 136.*, so it is advised to delete the driver in PATH and retry</msg>
 </errors>
 </robot>

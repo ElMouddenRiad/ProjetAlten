@@ -9,10 +9,10 @@ Création et vérifications d’un ticket sur ServiceNow
     [Documentation]    Simule la création d’un ticket LTT ServiceNow et vérifie l’ensemble des éléments requis.
     Se connecter à ServiceNow
     Sleep    time_=20
-    #Remplir champ global search    créer IU
+    #Remplir champ global search    créer Tco
     Cliquer Sur Bouton All
+    Sleep    time_=30
+    Rechercher Et Selectionner Creer Tco
     Sleep    time_=20
-    Rechercher Et Selectionner Creer Iu
-    Sleep    time_=20
-    Remplir Champs Obligatoires Creer IU
+    Remplir Champs Obligatoires Tco
     Sleep    time_=20
