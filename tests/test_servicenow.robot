@@ -1,6 +1,5 @@
 *** Settings ***
 Resource    ../resources/servicenow_keywords.robot
-Library    ../libraries/shadow.py
 Suite Setup    Ouvrir le navigateur ServiceNow
 #Suite Teardown    Fermer le navigateur
 
@@ -9,22 +8,14 @@ Suite Setup    Ouvrir le navigateur ServiceNow
 Création et vérifications d’un ticket sur ServiceNow
     [Documentation]    Simule la création d’un ticket LTT ServiceNow et vérifie l’ensemble des éléments requis.
     Se connecter à ServiceNow
-    Sleep    time_=10
-    #Remplir champ global search    créer Tco
-    Cliquer Sur Bouton All
-    Sleep    time_=10
-    Rechercher Et Selectionner Ticket SAV Ouverts
-    Sleep    time_=10
-    Naviguer Vers Lien Ticket Spécifique
-    Sleep    time_=10
-    Remplir Champ Assigned To
-    Sleep    time_=10
-    cliquer bouton save
-    Sleep    time_=10
-    cliquer bouton request for information
-    Sleep    time_=10
-    traiter popup information
-    Sleep    time_=10
-    verifier etat et etape technique
-    Sleep    time_=10
-
+    
+    #Remplir champ global search    créer IU
+    #Cliquer Sur Bouton All
+    #Rechercher Et Selectionner Creer Iu
+    #Remplir Champs Obligatoires IU
+    
+    Sleep    time_=5
+    Naviguer à la création du ticket IU
+    Sleep    time_=5
+    Remplir les champs du ticket IU
+    Sleep    time_=5

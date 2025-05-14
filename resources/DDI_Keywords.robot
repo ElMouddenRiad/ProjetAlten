@@ -1,8 +1,6 @@
 *** Settings ***
 Library    SeleniumLibrary
 resource  ../resources/variables.robot
-Library    ../libraries/servicenow/navigation.py
-Library    ../libraries/servicenow/champs.py
 
 *** Keywords ***
 Ouvrir le navigateur ServiceNow
@@ -15,9 +13,8 @@ Se connecter à ServiceNow
     Input Text    id=user_password    ${SNOW_PASSWORD}
     Click Button    id=sysverb_login
 
-Naviguer à la création du ticket IU
-    Cliquer Sur Bouton All
-    Rechercher Et Selectionner Creer Tco
 
-Remplir les champs du ticket IU
-    Remplir Champs Obligatoires Tco
+Naviguer Vers Lien Ticket Spécifique
+    [Documentation]    Navigue vers une URL spécifique du ticket ServiceNow pour consultation ou modification.
+    Go To    https://bouyguestelecomltt3.service-now.com/u_savftth.do?sys_id=3c9b39e6837f1a505985bfa6feaad303&sysparm_record_target=u_savftth&sysparm_record_row=4&sysparm_record_rows=6&sysparm_record_list=u_techstage%3DTrt_Usine%5EORDERBYstate
+    Sleep    5s
