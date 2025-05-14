@@ -123,7 +123,7 @@ def Cliquer_sur_bouton_all():
 
 
 @keyword
-def Rechercher_et_selectionner_creer_TCO():
+def Rechercher_et_selectionner_Ticket_SAV_Ouverts():
     seleniumlib = BuiltIn().get_library_instance("SeleniumLibrary")
     driver = seleniumlib.driver
 
@@ -166,8 +166,8 @@ def Rechercher_et_selectionner_creer_TCO():
 
             if input_element:
                 js_input = driver.execute_script("return arguments[0];", input_element)
-                js_input.send_keys("Créer Tco")
-                print("Texte 'Créer Tco' saisi dans la barre contextuelle.")
+                js_input.send_keys("Ticket SAV - Tickets ouverts SAV FTTH (BO)")
+                print("Texte 'Ticket SAV - Tickets ouverts SAV FTTH (BO)' saisi dans la barre contextuelle.")
                 break
 
         except Exception as e:
@@ -206,7 +206,7 @@ def Rechercher_et_selectionner_creer_TCO():
 
                     for (const item of items) {
                         const text = item.innerText.trim().toLowerCase();
-                        if (text.includes("créer tco")) {
+                        if (text.includes("ticket sav - tickets ouverts sav ftth (bo)")) {
                             item.click();
                             return true;
                         }
@@ -228,6 +228,123 @@ def Rechercher_et_selectionner_creer_TCO():
 
     raise Exception("Impossible de cliquer sur 'Créer Tco' dans les favoris.")
 
+def remplir_champ_assigned_to():
+    selenium_lib = BuiltIn().get_library_instance("SeleniumLibrary")
+    driver = selenium_lib.driver
+    wait = WebDriverWait(driver, 15)
+
+    champ_visible_id = "sys_display.u_savftth.assigned_to"
+    champ_cache_id = "sys_original.u_savftth.assigned_to"
+
+    wait.until(EC.presence_of_element_located((By.ID, champ_visible_id)))
+
+    driver.execute_script(f"""
+        const visibleField = document.getElementById("{champ_visible_id}");
+        const hiddenField = document.getElementById("{champ_cache_id}");
+
+        if (!visibleField) throw "Champ visible non trouvé : {champ_visible_id}";
+        if (!hiddenField) throw "Champ caché non trouvé : {champ_cache_id}";
+
+        visibleField.value = "Altst004 ALTST004";
+        hiddenField.value = "Altst004 ALTST004";
+
+        visibleField.dispatchEvent(new Event('input', {{ bubbles: true }}));
+        visibleField.dispatchEvent(new Event('change', {{ bubbles: true }}));
+    """)
+
+    # Pause de 3 secondes pour laisser le champ détecter et valider l'utilisateur
+    time.sleep(3)
+def cliquer_bouton_save():
+    selenium_lib = BuiltIn().get_library_instance("SeleniumLibrary")
+    driver = selenium_lib.driver
+    wait = WebDriverWait(driver, 15)
+
+    wait.until(EC.presence_of_element_located((By.ID, "sysverb_update_and_stay")))
+
+    driver.execute_script('document.getElementById("sysverb_update_and_stay").click();')
+
+def cliquer_bouton_request_for_information():
+    selenium_lib = BuiltIn().get_library_instance("SeleniumLibrary")
+    driver = selenium_lib.driver
+    wait = WebDriverWait(driver, 15)
+
+    wait.until(EC.presence_of_element_located((By.ID, "u_ticketsav_infoRequest")))
+
+    driver.execute_script('document.getElementById("u_ticketsav_infoRequest").click();')
+
+
+def traiter_popup_information():
+    selenium_lib = BuiltIn().get_library_instance("SeleniumLibrary")
+    driver = selenium_lib.driver
+    wait = WebDriverWait(driver, 15)
+
+    # Attendre que la liste déroulante soit présente
+    wait.until(EC.presence_of_element_located((By.ID, "ddi_reason")))
+
+    # Sélectionner l'option "Refaire les tests du N1"
+    driver.execute_script("""
+        const select = document.getElementById("ddi_reason");
+        if (!select) throw "Liste déroulante 'ddi_reason' introuvable";
+
+        for (let option of select.options) {
+            if (option.text.trim() === "Refaire les tests du N1") {
+                select.value = option.value;
+                select.dispatchEvent(new Event('change', { bubbles: true }));
+                break;
+            }
+        }
+    """)
+
+    # Remplir le champ "Description"
+    driver.execute_script("""
+        const description = document.getElementById("dialog_comments");
+        if (!description) throw "Champ 'dialog_comments' introuvable";
+
+        description.value = "Veuillez effectuer de nouveaux tests selon les remarques N1.";
+        description.dispatchEvent(new Event('input', { bubbles: true }));
+    """)
+
+    # Cliquer sur le bouton OK
+    driver.execute_script("""
+        const boutonOK = document.getElementById("ok_button");
+        if (!boutonOK) throw "Bouton OK introuvable";
+
+        boutonOK.click();
+    """)
+
+
+def verifier_etat_et_etape_technique():
+    selenium_lib = BuiltIn().get_library_instance("SeleniumLibrary")
+    driver = selenium_lib.driver
+
+    result = driver.execute_script("""
+        const etatElem = document.getElementById("u_savftth.state");
+        const etapeElem = document.getElementById("u_savftth.u_techstage");
+
+        if (!etatElem || !etapeElem) {
+            return { success: false, message: "Champs non trouvés" };
+        }
+
+        const etatText = etatElem.options[etatElem.selectedIndex].text.trim();
+        const etapeText = etapeElem.options[etapeElem.selectedIndex].text.trim();
+
+        const etatOk = etatText === "Freezed";
+        const etapeOk = etapeText === "Attente Client DDI";
+
+        return {
+            success: etatOk && etapeOk,
+            etatText,
+            etapeText,
+            message: etatOk && etapeOk 
+                     ? "Vérification réussie" 
+                     : `État: ${etatText}, Étape technique: ${etapeText}`
+        };
+    """)
+
+    if not result["success"]:
+        raise AssertionError(f"Vérification échouée : {result['message']}")
+
+
 @keyword
 def switch_to_main_iframe(driver):
     iframe = driver.execute_script("""
@@ -239,211 +356,10 @@ def switch_to_main_iframe(driver):
     if not iframe:
         raise Exception("Iframe introuvable dans le Shadow DOM.")
     driver.switch_to.frame(iframe)
-
-def remplir_champ_input_id_contrat(driver, wait):
-    champ_input_id = "IO:5ef59274db883b804ea8fd141d961940"
-    wait.until(EC.presence_of_element_located((By.ID, champ_input_id)))
-    driver.execute_script(f"""
-        let el = document.querySelector("[id='{champ_input_id}']");
-        el.value = "610000000001";
-        el.dispatchEvent(new Event('change', {{ bubbles: true }}));
-    """)
-
-def remplir_champ_origine(driver, wait):
-    origine_id = "IO:066bda30dbc83b804ea8fd141d9619d9"
-    wait.until(EC.presence_of_element_located((By.ID, origine_id)))
-    driver.execute_script(f"""
-        let select = document.querySelector("[id='{origine_id}']");
-        for (let option of select.options) {{
-            if (option.text.trim() === "Post-bascule CO") {{
-                select.value = option.value;
-                select.dispatchEvent(new Event('change', {{ bubbles: true }}));
-                break;
-            }}
-        }}
-    """)
-
-def attendre_et_remplir_categorie(driver, wait):
-    categorie_id = "IO:cb1a527cdb883b804ea8fd141d961908"
-    hidden_id = f"sys_original.{categorie_id}"
-
-    print("Attente du champ catégorie dans le DOM...")
-
-    success = driver.execute_async_script(f"""
-        var callback = arguments[arguments.length - 1];
-        const start = Date.now();
-
-        function checkOptions() {{
-            const select = document.querySelector("select[id='{categorie_id}']");
-            if (!select) {{
-                if (Date.now() - start > 10000) return callback(false);
-                return setTimeout(checkOptions, 300);
-            }}
-            const options = select.options;
-            if (!options || options.length === 0) {{
-                if (Date.now() - start > 10000) return callback(false);
-                return setTimeout(checkOptions, 300);
-            }}
-            for (let opt of options) {{
-                if (opt.textContent.trim() && opt.textContent.trim() !== "-- None --") {{
-                    return callback(true);
-                }}
-            }}
-            if (Date.now() - start > 10000) return callback(false);
-            setTimeout(checkOptions, 300);
-        }}
-
-        checkOptions();
-    """)
-
-    if not success:
-        raise Exception("Catégorie non peuplée après 10 secondes")
-
-    driver.execute_script(f"""
-        const select = document.querySelector("select[id='{categorie_id}']");
-        const hidden = document.querySelector("input[id='sys_original.{categorie_id}']");
-
-        if (!select) throw "Sélecteur non trouvé : select[id='{categorie_id}']";
-        if (!hidden) throw "Sélecteur non trouvé : input[id='sys_original.{categorie_id}']";
-
-        for (let option of select.options) {{
-            if (option.textContent.trim() === "Action sur ligne") {{
-                select.value = option.value;
-                hidden.value = option.value;
-                select.dispatchEvent(new Event('change', {{ bubbles: true }}));
-                break;
-            }}
-        }}
-    """)
-
-def attendre_et_remplir_sous_categorie(driver, wait):
-    sous_categorie_id = "IO:2dcd5a34dbc83b804ea8fd141d961951"
-    hidden_id = f"sys_original.{sous_categorie_id}"
-
-    print("Attente du champ sous-catégorie dans le DOM...")
-
-    success = driver.execute_async_script(f"""
-        var callback = arguments[arguments.length - 1];
-        const start = Date.now();
-
-        function checkOptions() {{
-            const select = document.querySelector("select[id='{sous_categorie_id}']");
-            if (!select) {{
-                if (Date.now() - start > 10000) return callback(false);
-                return setTimeout(checkOptions, 300);
-            }}
-            const options = select.options;
-            if (!options || options.length === 0) {{
-                if (Date.now() - start > 10000) return callback(false);
-                return setTimeout(checkOptions, 300);
-            }}
-            for (let opt of options) {{
-                if (opt.textContent.trim() && opt.textContent.trim() !== "-- None --") {{
-                    return callback(true);
-                }}
-            }}
-            if (Date.now() - start > 10000) return callback(false);
-            setTimeout(checkOptions, 300);
-        }}
-
-        checkOptions();
-    """)
-
-    if not success:
-        raise Exception("Sous-catégorie non peuplée après 10 secondes")
-
-    # Remplissage (ex: valeur "Service Web")
-    driver.execute_script(f"""
-        const select = document.querySelector("select[id='{sous_categorie_id}']");
-        const hidden = document.querySelector("input[id='sys_original.{sous_categorie_id}']");
-
-        if (!select) throw "Sélecteur non trouvé : select[id='{sous_categorie_id}']";
-        if (!hidden) throw "Sélecteur non trouvé : input[id='sys_original.{sous_categorie_id}']";
-
-        for (let option of select.options) {{
-            if (option.textContent.trim() === "Abandon pour relance") {{
-                select.value = option.value;
-                hidden.value = option.value;
-                select.dispatchEvent(new Event('change', {{ bubbles: true }}));
-                break;
-            }}
-        }}
-    """)
-
-def remplir_champ_technologie(driver, wait):
-    technologie_id = "IO:aa881e78db883b804ea8fd141d9619ad"
-    hidden_id = f"sys_original.{technologie_id}"
-
-    # Attendre que le champ apparaisse dans le DOM
-    wait.until(EC.presence_of_element_located((By.ID, technologie_id)))
-
-    driver.execute_script("""
-        const select = document.querySelector("select[id='IO:aa881e78db883b804ea8fd141d9619ad']");
-        const hidden = document.querySelector("input[id='sys_original.IO:aa881e78db883b804ea8fd141d9619ad']");
-
-        if (!select) throw "Sélecteur non trouvé : select[id='IO:...']";
-        if (!hidden) throw "Sélecteur non trouvé : input[id='sys_original.IO:...']";
-
-        for (let option of select.options) {
-            if (option.text.trim() === "FTTH") {
-                select.value = option.value;
-                hidden.value = option.value;
-                select.dispatchEvent(new Event('change', { bubbles: true }));
-                break;
-            }
-        }
-    """)
-
-def remplir_description(driver, wait):
-    textarea_id = "IO:c62266fcdbc83b804ea8fd141d9619c4"
-    hidden_input_id = "sys_original.IO:c62266fcdbc83b804ea8fd141d9619c4"
-
-    # Attendre que le champ description soit présent dans le DOM
-    wait.until(EC.presence_of_element_located((By.ID, textarea_id)))
-
-    driver.execute_script(f"""
-        const textarea = document.getElementById("{textarea_id}");
-        const hidden = document.getElementById("{hidden_input_id}");
-        if (!textarea || !hidden) {{
-            throw new Error("Champs de description non trouvés");
-        }}
-        textarea.value = "Ticket test automatisé NR Tco par Robotframework";
-        hidden.value = "Ticket test automatisé NR Tco SAV par Robotframework";
-        textarea.dispatchEvent(new Event('input', {{ bubbles: true }}));
-        textarea.dispatchEvent(new Event('change', {{ bubbles: true }}));
-    """)
-
-
-def cocher_case_test_ticket(driver, wait):
-    checkbox_id = "ni.IO:ce16de4edb387b404ea8fd141d9619f6"
-
-    # Attendre que l’élément soit présent dans le DOM
-    checkbox = wait.until(EC.presence_of_element_located((By.ID, checkbox_id)))
-
-    # Vérifier s’il est déjà coché
-    if not checkbox.is_selected():
-        # Clic forcé via JavaScript (contourne les superpositions)
-        driver.execute_script("arguments[0].click();", checkbox)
-
-def soumettre_ticket(driver, wait):
-    wait.until(EC.presence_of_element_located((By.ID, "submit_button")))
-    driver.execute_script('document.getElementById("submit_button").click();')
-
-
-def remplir_champs_obligatoires_Tco():
-    seleniumlib = BuiltIn().get_library_instance("SeleniumLibrary")
-    driver = seleniumlib.driver
-    wait = WebDriverWait(driver, 20)
-
+    
     switch_to_main_iframe(driver)
-    remplir_champ_input_id_contrat(driver, wait)
-    remplir_champ_origine(driver, wait)
-    remplir_champ_technologie(driver, wait)
-    attendre_et_remplir_categorie(driver, wait)
-    attendre_et_remplir_sous_categorie(driver, wait)
+   
     #attendre_et_remplir_categorie(driver, wait)
 
-    remplir_description(driver, wait)
-    cocher_case_test_ticket(driver, wait)
-    soumettre_ticket(driver, wait)
-    print("Tous les champs obligatoires ont été remplis.")
+    
+   
