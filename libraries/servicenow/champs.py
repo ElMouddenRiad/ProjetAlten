@@ -1,5 +1,6 @@
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import TimeoutException
 from utils import get_driver, get_wait 
 from robot.libraries.BuiltIn import BuiltIn
 from navigation import switch_to_main_iframe
@@ -11,7 +12,7 @@ def remplir_champ_input_id_contrat():
     wait.until(EC.presence_of_element_located((By.ID, champ_input_id)))
     driver.execute_script(f"""
         let el = document.querySelector("[id='{champ_input_id}']");
-        el.value = "610000000001";
+        el.value = "610000000025";
         el.dispatchEvent(new Event('change', {{ bubbles: true }}));
     """)
 
@@ -196,8 +197,8 @@ def remplir_description():
         if (!textarea || !hidden) {{
             throw new Error("Champs de description non trouvés");
         }}
-        textarea.value = "Ticket test automatisé NR FTTH SAV par Robotframework";
-        hidden.value = "Ticket test automatisé NR FTTH SAV par Robotframework";
+        textarea.value = "Ticket test automatisé NR FTTH SAV par Robotframework, Crée par Riad";
+        hidden.value = "Ticket test automatisé NR FTTH SAV par Robotframework, Crée par Riad";
         textarea.dispatchEvent(new Event('input', {{ bubbles: true }}));
         textarea.dispatchEvent(new Event('change', {{ bubbles: true }}));
     """)
@@ -222,8 +223,20 @@ def soumettre_ticket():
     driver.execute_script('document.getElementById("submit_button").click();')
 
 
-def remplir_champs_obligatoires_iu():
+def attendre_redirection_et_obtenir_url_ticket():
+    wait = get_wait(15)
+    try:
+        wait.until(lambda d: "u_savftth.do" in d.current_url and "sys_id=" in d.current_url)
+        url = get_driver().current_url
+        print(f"Redirection réussie. Ticket créé : {url}")
+        return url
+    except TimeoutException:
+        current_url = get_driver().current_url
+        print(f"[WARN] Timeout d’attente de redirection. URL actuelle : {current_url}")
+        return current_url  # on retourne quand même quelque chose
 
+
+def remplir_champs_obligatoires_iu():
     switch_to_main_iframe()
 
     remplir_champ_input_id_contrat() 
@@ -235,4 +248,6 @@ def remplir_champs_obligatoires_iu():
     cocher_case_test_ticket()
     soumettre_ticket()
 
-    print("Tous les champs obligatoires ont été remplis et le ticket a été soumis.")
+    ticket_url = attendre_redirection_et_obtenir_url_ticket()
+
+    return ticket_url
