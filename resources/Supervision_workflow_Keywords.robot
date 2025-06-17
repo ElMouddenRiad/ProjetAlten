@@ -14,7 +14,8 @@ Se connecter à ServiceNow
     Click Button    id=sysverb_login
 
 
-Naviguer Vers Lien Ticket Spécifique
+Naviguer Vers Lien de la liste des workflow Spécifique
     [Documentation]    Navigue vers une URL spécifique du ticket ServiceNow pour consultation ou modification.
-    Go To   https://bouyguestelecomltt3.service-now.com/u_savftth.do?sys_id=02115817839ce6105985bfa6feaad397&sysparm_view=&sysparm_domain=null&sysparm_domain_scope=null&sysparm_record_row=1&sysparm_record_rows=100&sysparm_record_list=active%3dtrue%5estate%3d2%5eORDERBYDESCstate
+    Go To   https://bouyguestelecomltt3.service-now.com/u_replay_workflow_list.do?sysparm_query=u_business_process.u_activity_nameLIKEBP_RET&sysparm_first_row=1&sysparm_view=&sysparm_choice_query_raw=&sysparm_list_header_search=true
     Sleep    5s
+

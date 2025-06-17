@@ -218,15 +218,15 @@ def Rechercher_et_selectionner_Ticket_SAV_Ouverts():
                 }
                 """)
             if result:
-                print("Clic sur 'Créer Tco' dans les favoris réussi.")
+                print("Clic sur 'Tickets SAV Ouverts' dans les favoris réussi.")
                 return
 
         except Exception as e:
-            print(f"Erreur lors du clic sur 'Créer Tco' : {e}")
+            print(f"Erreur lors du clic sur 'Tickets SAV Ouvert' : {e}")
 
         time.sleep(delay)
 
-    raise Exception("Impossible de cliquer sur 'Créer Tco' dans les favoris.")
+    raise Exception("Impossible de cliquer sur 'Tickets SAV Ouvert' dans les favoris.")
 
 
 
@@ -237,15 +237,12 @@ def remplir_champ_assigned_to():
 
     champ_id = "sys_display.u_savftth.assigned_to"
     champ = wait.until(EC.presence_of_element_located((By.ID, champ_id)))
-    
     # Clic sur le champ
     champ.click()
     time.sleep(0.5)
-
     # Taper pour déclencher les suggestions
     champ.send_keys("Alt")
     time.sleep(2)  # Attente suggestions
-
     # JS : tenter de cliquer sur la suggestion
     js_script = """
         try {
@@ -278,122 +275,173 @@ def cliquer_bouton_save():
 
 
 
-def cliquer_bouton_request_for_information():
+def clicker_boutton_Demande_intervention():
     selenium_lib = BuiltIn().get_library_instance("SeleniumLibrary")
     driver = selenium_lib.driver
     wait = WebDriverWait(driver, 15)
 
-    wait.until(EC.presence_of_element_located((By.ID, "u_ticketsav_infoRequest")))
+    wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "#u_savftth_demande_intervention")))
 
-    driver.execute_script('document.getElementById("u_ticketsav_infoRequest").click();')
+    driver.execute_script('document.querySelector("#u_savftth_demande_intervention").click();')
 
 
+def remplir_champ_source_tag():
+    from selenium.webdriver.common.by import By
+    from selenium.webdriver.support.ui import WebDriverWait
+    from selenium.webdriver.support import expected_conditions as EC
+    from robot.libraries.BuiltIn import BuiltIn
 
-def traiter_popup_information():
     selenium_lib = BuiltIn().get_library_instance("SeleniumLibrary")
     driver = selenium_lib.driver
-    wait = WebDriverWait(driver, 15)
+    wait = WebDriverWait(driver, 20)
 
-    # Attendre que la liste déroulante soit présente
-    wait.until(EC.presence_of_element_located((By.ID, "ddi_reason")))
+    champ_css = "#sys_display\\.u_savftth_maintainer\\.u_source_tag"
 
-    # Sélectionner l'option "Refaire les tests du N1"
+    # Attendre que le champ soit présent et visible
+    input_el = wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, champ_css)))
+
+    # 🖱️ Cliquer sur le champ pour activer la saisie
+    input_el.click()
+
+    # Injecter le texte via JavaScript en passant l’élément en argument
     driver.execute_script("""
-        const select = document.getElementById("ddi_reason");
-        if (!select) throw "Liste déroulante 'ddi_reason' introuvable";
+        const input = arguments[0];
+        input.value = "Traitement N2";
+        input.dispatchEvent(new Event('input', { bubbles: true }));
+        input.dispatchEvent(new Event('change', { bubbles: true }));
+    """, input_el)
 
+
+def Remplir_champ_Type_Intervention():
+    from selenium.webdriver.common.by import By
+    from selenium.webdriver.support.ui import WebDriverWait
+    from selenium.webdriver.support import expected_conditions as EC
+    from robot.libraries.BuiltIn import BuiltIn
+
+    selenium_lib = BuiltIn().get_library_instance("SeleniumLibrary")
+    driver = selenium_lib.driver
+    wait = WebDriverWait(driver, 15)
+
+    # Sélecteur CSS correctement échappé pour Python
+    champ_css = "#u_savftth_maintainer\\.u_inter_type"
+
+    # Attendre que le champ soit présent et visible
+    select_el = wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, champ_css)))
+
+    # Injecter la sélection via JavaScript en utilisant l'élément passé en paramètre
+    driver.execute_script("""
+        const select = arguments[0];
         for (let option of select.options) {
-            if (option.text.trim() === "Refaire les tests du N1") {
+            if (option.text.trim() === "SAV") {
                 select.value = option.value;
                 select.dispatchEvent(new Event('change', { bubbles: true }));
                 break;
             }
         }
-    """)
-
-    # Remplir le champ "Description"
-    driver.execute_script("""
-        const description = document.getElementById("dialog_comments");
-        if (!description) throw "Champ 'dialog_comments' introuvable";
-
-        description.value = "Veuillez effectuer de nouveaux tests selon les remarques N1.";
-        description.dispatchEvent(new Event('input', { bubbles: true }));
-    """)
-
-    # Cliquer sur le bouton OK
-    driver.execute_script("""
-        const boutonOK = document.getElementById("ok_button");
-        if (!boutonOK) throw "Bouton OK introuvable";
-
-        boutonOK.click();
-    """)
+    """, select_el)
 
 
-def verifier_etat_et_etape_technique():
+
+def clicker_bouton_Prender_RDV_Immediat():
     selenium_lib = BuiltIn().get_library_instance("SeleniumLibrary")
     driver = selenium_lib.driver
+    wait = WebDriverWait(driver, 15)
 
-    result = driver.execute_script("""
-        const etatElem = document.getElementById("u_savftth.state");
-        const etapeElem = document.getElementById("u_savftth.u_techstage");
+    # Attendre que le bouton soit présent dans le DOM
+    wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "#u_savftth_prendre_rdv_immediat")))
 
-        if (!etatElem || !etapeElem) {
-            return { success: false, message: "Champs non trouvés" };
-        }
+    # Cliquer sur le bouton via JavaScript
+    driver.execute_script('document.querySelector("#u_savftth_prendre_rdv_immediat").click();')
 
-        const etatText = etatElem.options[etatElem.selectedIndex].text.trim();
-        const etapeText = etapeElem.options[etapeElem.selectedIndex].text.trim();
+def choisir_rdv_jplus2_apres_midi():
+    from datetime import datetime, timedelta
+    from selenium.webdriver.common.by import By
+    from selenium.webdriver.support.ui import WebDriverWait
+    from selenium.webdriver.support import expected_conditions as EC
+    from robot.libraries.BuiltIn import BuiltIn
 
-        const etatOk = etatText === "Freezed";
-        const etapeOk = etapeText === "Attente Client DDI";
-
-        return {
-            success: etatOk && etapeOk,
-            etatText,
-            etapeText,
-            message: etatOk && etapeOk 
-                     ? "Vérification réussie" 
-                     : `État: ${etatText}, Étape technique: ${etapeText}`
-        };
-    """)
-
-    if not result["success"]:
-        raise AssertionError(f"Vérification échouée : {result['message']}")
-
-
-def verifier_sms():
     selenium_lib = BuiltIn().get_library_instance("SeleniumLibrary")
     driver = selenium_lib.driver
+    wait = WebDriverWait(driver, 20)
 
-    expected_text = """Liste des communications : 
-SMS - Le SMS FTTH - DDI - demande d'information n'a pas été envoyé
-Serveur vocal interactif - La communication IVR n'a pas été effectuée : 26"""
+    # Calculer la date cible (J+2)
+    date_cible = datetime.now() + timedelta(days=2)
+    jour = date_cible.day
+    mois = date_cible.month
 
-    try:
-        result = driver.execute_script("""
-            try {
-                const el = document.querySelector("#activity_bd40ad4c874eaa10e93e433d8bbb3597 > div > span");
-                if (!el) return "__ELEMENT_NON_TROUVE__";
-                return el.innerText.trim();
-            } catch(e) {
-                return "__ERREUR_JS__";
-            }
-        """)
-        
-        if result == "__ELEMENT_NON_TROUVE__":
-            print("⚠️ Élément introuvable avec le sélecteur CSS.")
-        elif result == "__ERREUR_JS__":
-            print("⚠️ Une erreur s’est produite en exécutant le JavaScript.")
-        elif expected_text.strip() in result:
-            print("✅ Texte trouvé et correspondance réussie.")
-        else:
-            print("❌ Texte trouvé, mais différent du texte attendu.")
-            print("Texte obtenu :")
-            print(result)
-    
-    except Exception as e:
-        print("❌ Exception Python capturée :")
-        print(str(e))
+    # Attendre qu'au moins un créneau "14:00 - 16:00" apparaisse
+    wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "div.fc-time[data-full='14:00 - 16:00']")))
+
+    # Exécuter le JS pour cliquer sur le bon créneau en fonction de la date
+    js_code = f"""
+        const allSlots = Array.from(document.querySelectorAll("div.fc-time[data-full='12:00 - 14:00']"));
+        let cible = null;
+
+        for (let el of allSlots) {{
+            let cell = el.closest('td');
+            if (!cell) continue;
+
+            let colIndex = Array.from(cell.parentElement.children).indexOf(cell);
+            let header = document.querySelectorAll("thead .fc-day-header")[colIndex];
+            if (!header) continue;
+
+            let text = header.innerText.trim(); // Ex: "mer. 18/6"
+            let match = text.match(/(\\d+)[\\/](\\d+)/);
+            if (!match) continue;
+
+            let jour = parseInt(match[1], 10);
+            let mois = parseInt(match[2], 10);
+
+            if (jour === {jour} && mois === {mois}) {{
+                cible = el;
+                break;
+            }}
+        }}
+
+        if (!cible) throw "Aucun créneau 14h–16h trouvé pour le jour J+2 ({jour}/{mois})";
+
+        let clickable = cible.closest("a") || cible.closest("div.fc-content");
+        if (!clickable) throw "Élément cliquable introuvable à partir du créneau";
+        clickable.click();
+    """
+    driver.execute_script(js_code)
+
+
+
+
+def cliquer_bouton_Reserver_RDV():
+    selenium_lib = BuiltIn().get_library_instance("SeleniumLibrary")
+    driver = selenium_lib.driver
+    wait = WebDriverWait(driver, 15)
+
+    # Attendre que le bouton du popup soit présent
+    wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "#btn_reservation")))
+
+    # Cliquer via JavaScript pour plus de fiabilité
+    driver.execute_script("""
+        const bouton = document.querySelector("#btn_reservation");
+        if (!bouton) throw "Bouton 'Réserver le RDV' non trouvé";
+        bouton.click();
+    """)
+
+
+
+
+def cliquer_bouton_Modifier_RDV():
+    selenium_lib = BuiltIn().get_library_instance("SeleniumLibrary")
+    driver = selenium_lib.driver
+    wait = WebDriverWait(driver, 15)
+
+    # Attendre la présence du bouton
+    wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "#u_savftth_modify_maintenance_appointment")))
+
+    # Cliquer sur le bouton via JavaScript
+    driver.execute_script("""
+        const bouton = document.querySelector("#u_savftth_modify_maintenance_appointment");
+        if (!bouton) throw "Bouton 'Modifier le RDV' non trouvé.";
+        bouton.click();
+    """)
+
 
 
 @keyword

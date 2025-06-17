@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.2.2 (Python 3.13.2 on win32)" generated="2025-06-17T10:31:06.680086" rpa="false" schemaversion="5">
+<suite id="s1" name="test Demande Mainteneur" source="C:\Test_Snow\ProjetAlten\tests\test_Demande_Mainteneur.robot">
+<kw name="Ouvrir le navigateur ServiceNow" owner="Demande_mainteneur_Keyword" type="SETUP">
+<kw name="Open Browser" owner="SeleniumLibrary">
+<msg time="2025-06-17T10:31:07.684000" level="INFO">Opening browser 'chrome' to base url 'https://bouyguestelecomltt3.service-now.com/'.</msg>
+<msg time="2025-06-17T10:31:08.356610" level="WARN">The chromedriver version (135.0.7049.95) detected in PATH at chromedriver.EXE might not be compatible with the detected chrome version (136.0.7103.114); currently, chromedriver 136.0.7103.113 is recommended for chrome 136.*, so it is advised to delete the driver in PATH and retry</msg>
+<arg>${SERVICENOW_URL}</arg>
+<arg>${BROWSER}</arg>
+<doc>Opens a new browser instance to the optional ``url``.</doc>
+<status status="PASS" start="2025-06-17T10:31:07.683276" elapsed="6.996807"/>
+</kw>
+<kw name="Maximize Browser Window" owner="SeleniumLibrary">
+<msg time="2025-06-17T10:31:16.315689" level="INFO" html="true">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="selenium-screenshot-10.png"&gt;&lt;img src="selenium-screenshot-10.png" width="800px"&gt;&lt;/a&gt;</msg>
+<msg time="2025-06-17T10:31:16.316669" level="FAIL">WebDriverException: Message: unknown error: JavaScript code failed
+from unknown command: 'Runtime.evaluate' wasn't found
+  (Session info: chrome=136.0.7103.114)
+Stacktrace:
+	GetHandleVerifier [0x00007FF662325355+78597]
+	GetHandleVerifier [0x00007FF6623253B0+78688]
+	(No symbol) [0x00007FF6620D91AA]
+	(No symbol) [0x00007FF6620C5900]
+	(No symbol) [0x00007FF6620C40FB]
+	(No symbol) [0x00007FF6620C48FF]
+	(No symbol) [0x00007FF6620EFF9B]
+	(No symbol) [0x00007FF6620E35B0]
+	(No symbol) [0x00007FF6620E3452]
+	(No symbol) [0x00007FF6620B5051]
+	(No symbol) [0x00007FF6620B2FF3]
+	(No symbol) [0x00007FF6621973A1]
+	(No symbol) [0x00007FF6621570EA]
+	(No symbol) [0x00007FF66217F2BB]
+	(No symbol) [0x00007FF662156EC3]
+	(No symbol) [0x00007FF6621203F8]
+	(No symbol) [0x00007FF662121163]
+	GetHandleVerifier [0x00007FF6625CEF0D+2870973]
+	GetHandleVerifier [0x00007FF6625C96B8+2848360]
+	GetHandleVerifier [0x00007FF6625E6993+2967875]
+	GetHandleVerifier [0x00007FF66234019A+188746]
+	GetHandleVerifier [0x00007FF66234847F+222255]
+	GetHandleVerifier [0x00007FF66232D2D4+111236]
+	GetHandleVerifier [0x00007FF66232D482+111666]
+	GetHandleVerifier [0x00007FF6623135A9+5465]
+	BaseThreadInitThunk [0x00007FFD38BC7374+20]
+	RtlUserThreadStart [0x00007FFD39C3CC91+33]
+</msg>
+<doc>Maximizes current browser window.</doc>
+<status status="FAIL" start="2025-06-17T10:31:14.682878" elapsed="1.920563">WebDriverException: Message: unknown error: JavaScript code failed
+from unknown command: 'Runtime.evaluate' wasn't found
+  (Session info: chrome=136.0.7103.114)
+Stacktrace:
+	GetHandleVerifier [0x00007FF662325355+78597]
+	GetHandleVerifier [0x00007FF6623253B0+78688]
+	(No symbol) [0x00007FF6620D91AA]
+	(No symbol) [0x00007FF6620C5900]
+	(No symbol) [0x00007FF6620C40FB]
+	(No symbol) [0x00007FF6620C48FF]
+	(No symbol) [0x00007FF6620EFF9B]
+	(No symbol) [0x00007FF6620E35B0]
+	(No symbol) [0x00007FF6620E3452]
+	(No symbol) [0x00007FF6620B5051]
+	(No symbol) [0x00007FF6620B2FF3]
+	(No symbol) [0x00007FF6621973A1]
+	(No symbol) [0x00007FF6621570EA]
+	(No symbol) [0x00007FF66217F2BB]
+	(No symbol) [0x00007FF662156EC3]
+	(No symbol) [0x00007FF6621203F8]
+	(No symbol) [0x00007FF662121163]
+	GetHandleVerifier [0x00007FF6625CEF0D+2870973]
+	GetHandleVerifier [0x00007FF6625C96B8+2848360]
+	GetHandleVerifier [0x00007FF6625E6993+2967875]
+	GetHandleVerifier [0x00007FF66234019A+188746]
+	GetHandleVerifier [0x00007FF66234847F+222255]
+	GetHandleVerifier [0x00007FF66232D2D4+111236]
+	GetHandleVerifier [0x00007FF66232D482+111666]
+	GetHandleVerifier [0x00007FF6623135A9+5465]
+	BaseThreadInitThunk [0x00007FFD38BC7374+20]
+	RtlUserThreadStart [0x00007FFD39C3CC91+33]
+</status>
+</kw>
+<status status="FAIL" start="2025-06-17T10:31:07.681550" elapsed="8.922979">WebDriverException: Message: unknown error: JavaScript code failed
+from unknown command: 'Runtime.evaluate' wasn't found
+  (Session info: chrome=136.0.7103.114)
+Stacktrace:
+	GetHandleVerifier [0x00007FF662325355+78597]
+	GetHandleVerifier [0x00007FF6623253B0+78688]
+	(No symbol) [0x00007FF6620D91AA]
+	(No symbol) [0x00007FF6620C5900]
+	(No symbol) [0x00007FF6620C40FB]
+	(No symbol) [0x00007FF6620C48FF]
+	(No symbol) [0x00007FF6620EFF9B]
+	(No symbol) [0x00007FF6620E35B0]
+	(No symbol) [0x00007FF6620E3452]
+	(No symbol) [0x00007FF6620B5051]
+	(No symbol) [0x00007FF6620B2FF3]
+	(No symbol) [0x00007FF6621973A1]
+	(No symbol) [0x00007FF6621570EA]
+	(No symbol) [0x00007FF66217F2BB]
+	(No symbol) [0x00007FF662156EC3]
+	(No symbol) [0x00007FF6621203F8]
+	(No symbol) [0x00007FF662121163]
+	GetHandleVerifier [0x00007FF6625CEF0D+2870973]
+	GetHandleVerifier [0x00007FF6625C96B8+2848360]
+	GetHandleVerifier [0x00007FF6625E6993+2967875]
+	GetHandleVerifier [0x00007FF66234019A+188746]
+	GetHandleVerifier [0x00007FF66234847F+222255]
+	GetHandleVerifier [0x00007FF66232D2D4+111236]
+	GetHandleVerifier [0x00007FF66232D482+111666]
+	GetHandleVerifier [0x00007FF6623135A9+5465]
+	BaseThreadInitThunk [0x00007FFD38BC7374+20]
+	RtlUserThreadStart [0x00007FFD39C3CC91+33]
+</status>
+</kw>
+<test id="s1-t1" name="Test DDI Complet" line="8">
+<doc>Simule une demande d'information</doc>
+<status status="FAIL" start="2025-06-17T10:31:16.604845" elapsed="0.002205">Parent suite setup failed:
+WebDriverException: Message: unknown error: JavaScript code failed
+from unknown command: 'Runtime.evaluate' wasn't found
+  (Session info: chrome=136.0.7103.114)
+Stacktrace:
+	GetHandleVerifier [0x00007FF662325355+78597]
+	GetHandleVerifier [0x00007FF6623253B0+78688]
+	(No symbol) [0x00007FF6620D91AA]
+	(No symbol) [0x00007FF6620C5900]
+	(No symbol) [0x00007FF6620C40FB]
+	(No symbol) [0x00007FF6620C48FF]
+	(No symbol) [0x00007FF6620EFF9B]
+	(No symbol) [0x00007FF6620E35B0]
+	(No symbol) [0x00007FF6620E3452]
+	(No symbol) [0x00007FF6620B5051]
+	(No symbol) [0x00007FF6620B2FF3]
+	(No symbol) [0x00007FF6621973A1]
+	(No symbol) [0x00007FF6621570EA]
+	(No symbol) [0x00007FF66217F2BB]
+	(No symbol) [0x00007FF662156EC3]
+	(No symbol) [0x00007FF6621203F8]
+	(No symbol) [0x00007FF662121163]
+	GetHandleVerifier [0x00007FF6625CEF0D+2870973]
+	GetHandleVerifier [0x00007FF6625C96B8+2848360]
+	GetHandleVerifier [0x00007FF6625E6993+2967875]
+	GetHandleVerifier [0x00007FF66234019A+188746]
+	GetHandleVerifier [0x00007FF66234847F+222255]
+	GetHandleVerifier [0x00007FF66232D2D4+111236]
+	GetHandleVerifier [0x00007FF66232D482+111666]
+	GetHandleVerifier [0x00007FF6623135A9+5465]
+	BaseThreadInitThunk [0x00007FFD38BC7374+20]
+	RtlUserThreadStart [0x00007FFD39C3CC91+33]
+</status>
+</test>
+<status status="FAIL" start="2025-06-17T10:31:06.685169" elapsed="9.931298">Suite setup failed:
+WebDriverException: Message: unknown error: JavaScript code failed
+from unknown command: 'Runtime.evaluate' wasn't found
+  (Session info: chrome=136.0.7103.114)
+Stacktrace:
+	GetHandleVerifier [0x00007FF662325355+78597]
+	GetHandleVerifier [0x00007FF6623253B0+78688]
+	(No symbol) [0x00007FF6620D91AA]
+	(No symbol) [0x00007FF6620C5900]
+	(No symbol) [0x00007FF6620C40FB]
+	(No symbol) [0x00007FF6620C48FF]
+	(No symbol) [0x00007FF6620EFF9B]
+	(No symbol) [0x00007FF6620E35B0]
+	(No symbol) [0x00007FF6620E3452]
+	(No symbol) [0x00007FF6620B5051]
+	(No symbol) [0x00007FF6620B2FF3]
+	(No symbol) [0x00007FF6621973A1]
+	(No symbol) [0x00007FF6621570EA]
+	(No symbol) [0x00007FF66217F2BB]
+	(No symbol) [0x00007FF662156EC3]
+	(No symbol) [0x00007FF6621203F8]
+	(No symbol) [0x00007FF662121163]
+	GetHandleVerifier [0x00007FF6625CEF0D+2870973]
+	GetHandleVerifier [0x00007FF6625C96B8+2848360]
+	GetHandleVerifier [0x00007FF6625E6993+2967875]
+	GetHandleVerifier [0x00007FF66234019A+188746]
+	GetHandleVerifier [0x00007FF66234847F+222255]
+	GetHandleVerifier [0x00007FF66232D2D4+111236]
+	GetHandleVerifier [0x00007FF66232D482+111666]
+	GetHandleVerifier [0x00007FF6623135A9+5465]
+	BaseThreadInitThunk [0x00007FFD38BC7374+20]
+	RtlUserThreadStart [0x00007FFD39C3CC91+33]
+</status>
+</suite>
+<statistics>
+<total>
+<stat pass="0" fail="1" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat name="test Demande Mainteneur" id="s1" pass="0" fail="1" skip="0">test Demande Mainteneur</stat>
+</suite>
+</statistics>
+<errors>
+<msg time="2025-06-17T10:31:08.356610" level="WARN">The chromedriver version (135.0.7049.95) detected in PATH at chromedriver.EXE might not be compatible with the detected chrome version (136.0.7103.114); currently, chromedriver 136.0.7103.113 is recommended for chrome 136.*, so it is advised to delete the driver in PATH and retry</msg>
+</errors>
+</robot>

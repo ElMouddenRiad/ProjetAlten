@@ -2,15 +2,14 @@
 Resource    ../resources/DDI_Keywords.robot
 Library    ../libraries/DDI Ali/ShadowDDI_ali.py
 Suite Setup    Ouvrir le navigateur ServiceNow
-#Suite Teardown    Fermer le navigateur
+
 
 *** Test Cases ***
-*** Test Cases ***
-Création et vérifications d’un ticket sur ServiceNow
+Test DDI Complet
     [Documentation]    Simule la création d’un ticket LTT ServiceNow et vérifie l’ensemble des éléments requis.
     Se connecter à ServiceNow
     Sleep    time_=10
-    #Remplir champ global search    créer Tco
+
     Cliquer Sur Bouton All
     Sleep    time_=10
     Rechercher Et Selectionner Ticket SAV Ouverts
@@ -26,4 +25,6 @@ Création et vérifications d’un ticket sur ServiceNow
     traiter popup information
     Sleep    time_=10
     verifier etat et etape technique
+    Sleep    time_=10
+    Verifier Sms
     Sleep    time_=10
